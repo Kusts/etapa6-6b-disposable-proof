@@ -1,13 +1,19 @@
 name: CI
 
+# Scaffolding honesto para a prova 6B: jobs com os NOMES canônicos exigidos
+# por delivery-policy.json do repositório principal. São checks triviais por
+# design — o objeto sob prova é o MECANISMO de merge mediado (decisão,
+# idempotência, efeito remoto), não as suítes do repo principal.
+# Repositório descartável: excluir após a prova.
+
 on:
   push:
     branches: [main]
   pull_request:
 
 jobs:
-  probe:
-    name: probe trivial
+  ps51:
+    name: CI (ps51)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,4 +21,40 @@ jobs:
         run: |
           test -f probe.txt
           cat probe.txt
-          echo "6B-PROBE-OK"
+          echo "6B-PROBE-OK-ps51"
+  ps7:
+    name: CI (ps7)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: verifica probe
+        run: |
+          test -f probe.txt
+          echo "6B-PROBE-OK-ps7"
+  smoke:
+    name: CI (smoke opencode real)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: verifica probe
+        run: |
+          test -f probe.txt
+          echo "6B-PROBE-OK-smoke"
+  v2lane:
+    name: CI (v2 lane, perfil V2 provisionado)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: verifica probe
+        run: |
+          test -f probe.txt
+          echo "6B-PROBE-OK-v2lane"
+  smokev2:
+    name: CI (smoke opencode v2 real)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: verifica probe
+        run: |
+          test -f probe.txt
+          echo "6B-PROBE-OK-smokev2"
